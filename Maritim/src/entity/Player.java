@@ -2,6 +2,7 @@ package entity;
 
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -14,6 +15,8 @@ import Maritim.KeyHandler;
 public class Player extends Entity {
 	GamePanel gp;
 	KeyHandler keyH;
+	int food=1000;
+	Font stringFont = new Font( "SansSerif", Font.PLAIN, 18 );
 	
 	public Player(GamePanel gp,KeyHandler keyH) {
 		this.gp =gp;
@@ -23,10 +26,14 @@ public class Player extends Entity {
 	}
 	public void getPlayerImage() {
 		try {
-			up = ImageIO.read(getClass().getResourceAsStream("up.png"));
-			left = ImageIO.read(getClass().getResourceAsStream("left.png"));
-			down = ImageIO.read(getClass().getResourceAsStream("down.png"));
-			right = ImageIO.read(getClass().getResourceAsStream("right.png"));
+			up1 = ImageIO.read(getClass().getResourceAsStream("/player/up1.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/player/left1.png"));
+			down1 = ImageIO.read(getClass().getResourceAsStream("/player/down1.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/player/right1.png"));
+			up2 = ImageIO.read(getClass().getResourceAsStream("/player/up2.png"));
+			left2 = ImageIO.read(getClass().getResourceAsStream("/player/left2.png"));
+			down2 = ImageIO.read(getClass().getResourceAsStream("/player/down2.png"));
+			right2 = ImageIO.read(getClass().getResourceAsStream("/player/right2.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -54,23 +61,70 @@ public class Player extends Entity {
 			direction ="right";
 			x = x - speed;
 		}
+		if ((keyH.upPressed == true)||(keyH.downPressed == true)||(keyH.leftPressed == true)||(keyH.rightPressed == true)) {
+			calculateFood();
+			spriteCounter++;
+			if (spriteCounter>20) {
+				if(sprite==1) {
+					sprite =2;
+					spriteCounter=0;
+				}else  {
+					sprite=1;
+					spriteCounter=0;
+				}
+			}
+		}else {
+			sprite = 1;
+		}
+		
+		
 	}
+	private void calculateFood() {
+		food = food -1;
+	}
+
 	public void draw(Graphics2D g2) {
 		BufferedImage image = null;
 		switch(direction) {
 		case "up" :
-			image = up;
+			if (sprite == 1) {
+				image = up1;
+			}
+			if (sprite ==2) {
+				image = up2;
+			}
+		
 			break;
 		case "down" :
-			image = down;
+			if (sprite == 1) {
+				image = down1;
+			}
+			if (sprite ==2) {
+				image = down2;
+			}
+
 			break;
 		case "left" :
-			image = left;
+			if (sprite == 1) {
+				image = left1;
+			}
+			if (sprite ==2) {
+				image = left2;
+			}
+			
 			break;
 		case "right" :
-			image = right;
+			if (sprite == 1) {
+				image = right1;
+			}
+			if (sprite ==2) {
+				image = right2;
+			}
+			
 			break;
 		}
 		g2.drawImage(image, x, y, gp.getTileSize(), gp.getTileSize(), null);
+		g2.setFont(stringFont);
+		g2.drawString(String.valueOf(food), 64, 64);
 	}
 }
