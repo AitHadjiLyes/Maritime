@@ -13,10 +13,12 @@ import Maritim.GamePanel;
 import Maritim.KeyHandler;
 
 public class Player extends Entity {
-	GamePanel gp;
-	KeyHandler keyH;
-	int food=1000;
-	Font stringFont = new Font( "SansSerif", Font.PLAIN, 18 );
+	private GamePanel gp;
+	private KeyHandler keyH;
+	private int food=1000;
+	private Font stringFont = new Font( "SansSerif", Font.PLAIN, 18 );
+	private int spriteCounter=0;
+	private int sprite=1;
 	
 	public Player(GamePanel gp,KeyHandler keyH) {
 		this.gp =gp;
@@ -45,23 +47,23 @@ public class Player extends Entity {
 		direction ="left";
 	}
 	public void Update() {
-		if(keyH.upPressed == true) {
+		if(keyH.isUpPressed() == true) {
 			direction ="up";
 			y = y - speed;
 		}
-		if(keyH.downPressed == true) {
+		if(keyH.isDownPressed() == true) {
 			direction ="down";
 			y = y + speed;
 		}
-		if(keyH.leftPressed == true) {
+		if(keyH.isLeftPressed() == true) {
 			direction ="left";
 			x = x + speed;
 		}
-		if(keyH.rightPressed == true) {
+		if(keyH.isRightPressed() == true) {
 			direction ="right";
 			x = x - speed;
 		}
-		if ((keyH.upPressed == true)||(keyH.downPressed == true)||(keyH.leftPressed == true)||(keyH.rightPressed == true)) {
+		if ((keyH.isUpPressed() == true)||(keyH.isDownPressed() == true)||(keyH.isLeftPressed() == true)||(keyH.isRightPressed() == true)) {
 			calculateFood();
 			spriteCounter++;
 			if (spriteCounter>20) {
@@ -123,7 +125,7 @@ public class Player extends Entity {
 			
 			break;
 		}
-		g2.drawImage(image, x, y, gp.getTileSize(), gp.getTileSize(), null);
+		g2.drawImage(image, x, y, gp.getTileSize()*2, gp.getTileSize()*2, null);
 		g2.setFont(stringFont);
 		g2.drawString(String.valueOf(food), 64, 64);
 	}

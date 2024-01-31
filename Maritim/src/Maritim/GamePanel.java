@@ -4,26 +4,29 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.io.IOException;
 
 import javax.swing.JPanel;
 
 import entity.Player;
+import map.BlockManager;
 
 public class GamePanel extends JPanel implements Runnable {
 	private static final long serialVersionUID = 1L;
 	//SCREEN SETTINGS
-	final int orignalTileSize = 64; // which means each tile has 16px
-	final int scale = 1; // to be able to modify the scaling of the game easily
+	private final int orignalTileSize = 32; // which means each tile has 16px
+	private final int scale = 2; // to be able to modify the scaling of the game easily
 
 	
-	final int tileSize = orignalTileSize * scale ;
-	final int maxScreenCol = 32;
-	final int maxScreenRow = 24;
-	final int screenWidhth = maxScreenCol * tileSize;
-	final int screenHeight = maxScreenRow * tileSize;
-	KeyHandler keyH = new KeyHandler();
-	Thread gameThread;
-	Player player = new Player(this,keyH);
+	private final int tileSize = orignalTileSize * scale ;
+	private final int maxScreenCol = 32;
+	private final int maxScreenRow = 24;
+	private final int screenWidhth = maxScreenCol * tileSize;
+	private final int screenHeight = maxScreenRow * tileSize;
+	private KeyHandler keyH = new KeyHandler();
+	private Thread gameThread;
+	private Player player = new Player(this,keyH);
+	private BlockManager bm  = new BlockManager(this);
 	
 	//FPS
 	int fps = 60;
@@ -47,7 +50,12 @@ public class GamePanel extends JPanel implements Runnable {
 		double nextDrawTime = System.nanoTime() + drawInterval;
 		while(gameThread != null){
 			
-			update();
+			try {
+				update();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			repaint();
 			
@@ -69,7 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
 		}
 		
 	}
-	public void update() {
+	public void update() throws IOException {
 		player.Update();
 	}
 	public void paintComponent(Graphics g) {
@@ -77,7 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
 		
 		Graphics2D g2 = (Graphics2D)g;
 		player.draw(g2);
-		g2.drawRect(0, 0, tileSize, tileSize);
+		g2.fillRect(0, 0, tileSize, tileSize);
 		g2.dispose();
 	}
 	public int getTileSize() {
