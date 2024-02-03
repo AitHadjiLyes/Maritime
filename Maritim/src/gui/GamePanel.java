@@ -1,4 +1,4 @@
-package Maritim;
+package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -8,14 +8,14 @@ import java.io.IOException;
 
 import javax.swing.JPanel;
 
-import entity.Player;
-import map.BlockManager;
+import engineEntity.Player;
+import engineMap.BlockManager;
 
 public class GamePanel extends JPanel implements Runnable {
 	private static final long serialVersionUID = 1L;
 	//SCREEN SETTINGS
-	private final int orignalTileSize = 32; // which means each tile has 16px
-	private final int scale = 2; // to be able to modify the scaling of the game easily
+	private final int orignalTileSize = 16; // which means each tile has 16px
+	private final int scale = 1; // to be able to modify the scaling of the game easily
 
 	
 	private final int tileSize = orignalTileSize * scale ;
@@ -26,7 +26,8 @@ public class GamePanel extends JPanel implements Runnable {
 	private KeyHandler keyH = new KeyHandler();
 	private Thread gameThread;
 	private Player player = new Player(this,keyH);
-	private BlockManager bm  = new BlockManager(this);
+	private BlockManager blockmanager  = new BlockManager(this);
+	private PaintElements paintelements = new PaintElements(this);
 	
 	//FPS
 	int fps = 60;
@@ -84,7 +85,12 @@ public class GamePanel extends JPanel implements Runnable {
 		super.paintComponent(g);
 		
 		Graphics2D g2 = (Graphics2D)g;
-		player.draw(g2);
+		paintelements.paint(player, g2);
+		try {
+			paintelements.paint(blockmanager, g2);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		g2.fillRect(0, 0, tileSize, tileSize);
 		g2.dispose();
 	}

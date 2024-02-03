@@ -1,4 +1,4 @@
-package Maritim;
+package gui;
 
 import javax.swing.JFrame;
 

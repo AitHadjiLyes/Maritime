@@ -1,4 +1,4 @@
-package entity;
+package engineEntity;
 
 
 import java.awt.Color;
@@ -9,8 +9,8 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import Maritim.GamePanel;
-import Maritim.KeyHandler;
+import gui.GamePanel;
+import gui.KeyHandler;
 
 public class Player extends Entity {
 	private GamePanel gp;
@@ -85,48 +85,41 @@ public class Player extends Entity {
 		food = food -1;
 	}
 
-	public void draw(Graphics2D g2) {
-		BufferedImage image = null;
-		switch(direction) {
-		case "up" :
-			if (sprite == 1) {
-				image = up1;
-			}
-			if (sprite ==2) {
-				image = up2;
-			}
-		
-			break;
-		case "down" :
-			if (sprite == 1) {
-				image = down1;
-			}
-			if (sprite ==2) {
-				image = down2;
-			}
 
-			break;
-		case "left" :
-			if (sprite == 1) {
-				image = left1;
-			}
-			if (sprite ==2) {
-				image = left2;
-			}
-			
-			break;
-		case "right" :
-			if (sprite == 1) {
-				image = right1;
-			}
-			if (sprite ==2) {
-				image = right2;
-			}
-			
-			break;
-		}
-		g2.drawImage(image, x, y, gp.getTileSize()*2, gp.getTileSize()*2, null);
-		g2.setFont(stringFont);
-		g2.drawString(String.valueOf(food), 64, 64);
+	public GamePanel getGp() {
+		return gp;
+	}
+	public void setGp(GamePanel gp) {
+		this.gp = gp;
+	}
+	public KeyHandler getKeyH() {
+		return keyH;
+	}
+	public void setKeyH(KeyHandler keyH) {
+		this.keyH = keyH;
+	}
+	public int getFood() {
+		return food;
+	}
+	public void setFood(int food) {
+		this.food = food;
+	}
+	public Font getStringFont() {
+		return stringFont;
+	}
+	public void setStringFont(Font stringFont) {
+		this.stringFont = stringFont;
+	}
+	public int getSpriteCounter() {
+		return spriteCounter;
+	}
+	public void setSpriteCounter(int spriteCounter) {
+		this.spriteCounter = spriteCounter;
+	}
+	public int getSprite() {
+		return sprite;
+	}
+	public void setSprite(int sprite) {
+		this.sprite = sprite;
 	}
 }
