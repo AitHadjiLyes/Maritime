@@ -1,8 +1,10 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.Iterator;
 
 import engineEntity.Player;
 import engineMap.BlockManager;
@@ -52,13 +54,43 @@ public class PaintElements {
 				
 				break;
 			}
-			g2.drawImage(image, player.getX(), player.getY(), gp.getTileSize()*2, gp.getTileSize()*2, null);
+			g2.drawImage(image, player.getX()-(gp.getTileSize()/2), player.getY()-(gp.getTileSize()/2), gp.getTileSize(), gp.getTileSize(), null);
+			g2.drawString(String.valueOf(gp.getBlockmanager().col), 200, 200);
+			g2.drawString(String.valueOf(gp.getBlockmanager().row), 220, 200);
+			
 			
 		}
-		/*
 		public void paint(BlockManager blockmanager,Graphics g2) throws IOException {
-			blockmanager.loadMap();
+			int[][] tab = blockmanager.getTab();
+			for (int i = 0; i < 32; i++) {
+				for (int j = 0; j < 24; j++) {
+					int image = tab[i][j];
+					switch (image) {
+					case 0 :
+						g2.drawImage(blockmanager.getBlock0().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
+						
+						break;
+					case 1:
+						g2.drawImage(blockmanager.getBlock1().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
+						break;
+					case 2 :
+						g2.drawImage(blockmanager.getBlock2().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
+						break;
+					case 3 :
+						g2.drawImage(blockmanager.getBlock3().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
+						break;
+					case 4 :
+						g2.drawImage(blockmanager.getBlock4().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
+						break;
+						
+
+					default:
+						break;
+					}
+					
+				}
+				
+			}
 		}
-		*/
 	
 }

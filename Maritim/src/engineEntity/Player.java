@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import engineMap.BlockManager;
 import gui.GamePanel;
 import gui.KeyHandler;
 
@@ -20,8 +21,9 @@ public class Player extends Entity {
 	private int spriteCounter=0;
 	private int sprite=1;
 	
+	
 	public Player(GamePanel gp,KeyHandler keyH) {
-		this.gp =gp;
+		this.gp = gp;
 		this.keyH=keyH;
 		setDefaultValues();
 		getPlayerImage();
@@ -47,19 +49,19 @@ public class Player extends Entity {
 		direction ="left";
 	}
 	public void Update() {
-		if(keyH.isUpPressed() == true) {
+		if((keyH.isUpPressed() == true)&&(gp.getBlockmanager().collisions(x, y-speed))) {
 			direction ="up";
 			y = y - speed;
 		}
-		if(keyH.isDownPressed() == true) {
+		if((keyH.isDownPressed() == true)&&(gp.getBlockmanager().collisions(x, y+speed))) {
 			direction ="down";
 			y = y + speed;
 		}
-		if(keyH.isLeftPressed() == true) {
+		if((keyH.isLeftPressed() == true)&&(gp.getBlockmanager().collisions(x+speed, y))) {
 			direction ="left";
 			x = x + speed;
 		}
-		if(keyH.isRightPressed() == true) {
+		if((keyH.isRightPressed() == true)&&(gp.getBlockmanager().collisions(x-speed, y))) {
 			direction ="right";
 			x = x - speed;
 		}
@@ -86,12 +88,7 @@ public class Player extends Entity {
 	}
 
 
-	public GamePanel getGp() {
-		return gp;
-	}
-	public void setGp(GamePanel gp) {
-		this.gp = gp;
-	}
+
 	public KeyHandler getKeyH() {
 		return keyH;
 	}

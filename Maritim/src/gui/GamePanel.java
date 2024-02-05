@@ -14,7 +14,58 @@ import engineMap.BlockManager;
 public class GamePanel extends JPanel implements Runnable {
 	private static final long serialVersionUID = 1L;
 	//SCREEN SETTINGS
-	private final int orignalTileSize = 16; // which means each tile has 16px
+	private final int orignalTileSize = 32; // which means each tile has 16px
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public int getOrignalTileSize() {
+		return orignalTileSize;
+	}
+
+	public int getScale() {
+		return scale;
+	}
+
+	public int getMaxScreenCol() {
+		return maxScreenCol;
+	}
+
+	public int getMaxScreenRow() {
+		return maxScreenRow;
+	}
+
+	public int getScreenWidhth() {
+		return screenWidhth;
+	}
+
+	public int getScreenHeight() {
+		return screenHeight;
+	}
+
+	public KeyHandler getKeyH() {
+		return keyH;
+	}
+
+	public Thread getGameThread() {
+		return gameThread;
+	}
+
+	public Player getPlayer() {
+		return player;
+	}
+
+	public BlockManager getBlockmanager() {
+		return blockmanager;
+	}
+
+	public PaintElements getPaintelements() {
+		return paintelements;
+	}
+
+	public int getFps() {
+		return fps;
+	}
 	private final int scale = 1; // to be able to modify the scaling of the game easily
 
 	
@@ -73,25 +124,34 @@ public class GamePanel extends JPanel implements Runnable {
 				
 				nextDrawTime += drawInterval;
 			} catch (Exception e) {
-				// TODO: handle exception
+				e.printStackTrace();
 			}
 		}
 		
 	}
 	public void update() throws IOException {
 		player.Update();
+		blockmanager.loadMap();
 	}
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
+		
 		Graphics2D g2 = (Graphics2D)g;
-		paintelements.paint(player, g2);
 		try {
 			paintelements.paint(blockmanager, g2);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		paintelements.paint(player, g2);
+		
+		
+		
+		
 		g2.fillRect(0, 0, tileSize, tileSize);
+		
+
 		g2.dispose();
 	}
 	public int getTileSize() {
