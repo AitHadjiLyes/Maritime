@@ -46,18 +46,18 @@ public class BlockManager {
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
-		tab = new int[gp.getMaxScreenCol()][gp.getMaxScreenRow()];
+		tab = new int[gp.getMaxWorldCol()][gp.getMaxWorldRow()];
 		
 	}
 	
 	public void loadMap() throws IOException {
-		InputStream is = getClass().getResourceAsStream("/map/map.txt");
+		InputStream is = getClass().getResourceAsStream("/map/map2.txt");
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		String ligne;
 		int j = 0;
 		while ((ligne = br.readLine()) != null) {
 			String[] splited = ligne.split(" ");
-			for (int i = 0; i < gp.getMaxScreenCol(); i++) {
+			for (int i = 0; i < gp.getMaxWorldCol(); i++) {
 				tab[i][j] =  Integer.parseInt(splited[i]);
 			}					
 		j = j+1;
@@ -107,7 +107,7 @@ public class BlockManager {
 	}
 	
 	
-	private Block whichTile(int n) {
+	public Block whichTile(int n) {
 	    switch (n) {
 	        case 0:
 	            return block[0];

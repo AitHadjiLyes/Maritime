@@ -54,39 +54,23 @@ public class PaintElements {
 				
 				break;
 			}
-			g2.drawImage(image, player.getX()-(gp.getTileSize()/2), player.getY()-(gp.getTileSize()/2), gp.getTileSize(), gp.getTileSize(), null);
-			g2.drawString(String.valueOf(gp.getBlockmanager().col), 200, 200);
-			g2.drawString(String.valueOf(gp.getBlockmanager().row), 220, 200);
+			g2.drawImage(image, player.getScreenPosX()-(gp.getTileSize()/2), player.getScreenPosY()-(gp.getTileSize()/2), gp.getTileSize(), gp.getTileSize(), null);
+			g2.drawString(String.valueOf("x :"+gp.getBlockmanager().col), 50, 20);
+			g2.drawString(String.valueOf("y :"+gp.getBlockmanager().row), 100, 20);
 			
 			
 		}
 		public void paint(BlockManager blockmanager,Graphics g2) throws IOException {
 			int[][] tab = blockmanager.getTab();
-			for (int i = 0; i < 32; i++) {
-				for (int j = 0; j < 24; j++) {
+			for (int i = 0; i < gp.getMaxWorldCol(); i++) {
+				for (int j = 0; j < gp.getMaxWorldRow(); j++) {
 					int image = tab[i][j];
-					switch (image) {
-					case 0 :
-						g2.drawImage(blockmanager.getBlock0().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
-						
-						break;
-					case 1:
-						g2.drawImage(blockmanager.getBlock1().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
-						break;
-					case 2 :
-						g2.drawImage(blockmanager.getBlock2().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
-						break;
-					case 3 :
-						g2.drawImage(blockmanager.getBlock3().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
-						break;
-					case 4 :
-						g2.drawImage(blockmanager.getBlock4().getImage(),i*gp.getTileSize(),j*gp.getTileSize(),gp.getTileSize(),gp.getTileSize(),null);
-						break;
-						
-
-					default:
-						break;
-					}
+					
+					int worldX = i * gp.getTileSize();
+					int worldY = j * gp.getTileSize();
+					int screenX = worldX - gp.getPlayer().getworldPosX() + gp.getPlayer().getScreenPosX();
+					int screenY = worldY - gp.getPlayer().getworldPosY() + gp.getPlayer().getScreenPosY();
+					g2.drawImage(blockmanager.whichTile(image).getImage(),screenX,screenY,gp.getTileSize(),gp.getTileSize(),null);		
 					
 				}
 				

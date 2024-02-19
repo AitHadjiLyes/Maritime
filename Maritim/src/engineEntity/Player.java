@@ -21,6 +21,8 @@ public class Player extends Entity {
 	private int spriteCounter=0;
 	private int sprite=1;
 	
+	private int screenPosX ;
+	private int screenPosY ;
 	
 	public Player(GamePanel gp,KeyHandler keyH) {
 		this.gp = gp;
@@ -43,27 +45,42 @@ public class Player extends Entity {
 		}
 	}
 	public void setDefaultValues() {
-		x = 100;
-		y = 100;
+		worldPosX = 100;
+		worldPosY = 100;
 		speed = 2;
 		direction ="left";
+		screenPosX = gp.getScreenWidhth()/2;
+		screenPosY = gp.getScreenHeight()/2;
+	}
+	public int getScreenPosX() {
+		return screenPosX;
+	}
+	public int getScreenPosY() {
+		return screenPosY;
 	}
 	public void Update() {
-		if((keyH.isUpPressed() == true)&&(gp.getBlockmanager().collisions(x, y-speed))) {
+		if (keyH.isSpacePressed()) {
+			speed = 4;
+		}
+		if (!(keyH.isSpacePressed())) {
+			speed = 2;
+		}
+		
+		if((keyH.isUpPressed() == true)&&(gp.getBlockmanager().collisions(worldPosX, worldPosY-speed))) {
 			direction ="up";
-			y = y - speed;
+			worldPosY = worldPosY - speed;
 		}
-		if((keyH.isDownPressed() == true)&&(gp.getBlockmanager().collisions(x, y+speed))) {
+		if((keyH.isDownPressed() == true)&&(gp.getBlockmanager().collisions(worldPosX, worldPosY+speed))) {
 			direction ="down";
-			y = y + speed;
+			worldPosY = worldPosY + speed;
 		}
-		if((keyH.isLeftPressed() == true)&&(gp.getBlockmanager().collisions(x+speed, y))) {
+		if((keyH.isLeftPressed() == true)&&(gp.getBlockmanager().collisions(worldPosX+speed, worldPosY))) {
 			direction ="left";
-			x = x + speed;
+			worldPosX = worldPosX + speed;
 		}
-		if((keyH.isRightPressed() == true)&&(gp.getBlockmanager().collisions(x-speed, y))) {
+		if((keyH.isRightPressed() == true)&&(gp.getBlockmanager().collisions(worldPosX-speed, worldPosY))) {
 			direction ="right";
-			x = x - speed;
+			worldPosX = worldPosX - speed;
 		}
 		if ((keyH.isUpPressed() == true)||(keyH.isDownPressed() == true)||(keyH.isLeftPressed() == true)||(keyH.isRightPressed() == true)) {
 			calculateFood();

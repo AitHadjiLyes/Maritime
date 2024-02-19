@@ -3,22 +3,22 @@ package engineEntity;
 import java.awt.image.BufferedImage;
 
 public class Entity {
-	protected int x,y ;
+	protected int worldPosX,worldPosY ;
 	protected int speed;
 	
 	protected BufferedImage up1, down1,left1,right1,up2, down2,left2,right2;
 	protected String direction;
-	public int getX() {
-		return x;
+	public int getworldPosX() {
+		return worldPosX;
 	}
-	public void setX(int x) {
-		this.x = x;
+	public void setworldPosX(int worldPosX) {
+		this.worldPosX = worldPosX;
 	}
-	public int getY() {
-		return y;
+	public int getworldPosY() {
+		return worldPosY;
 	}
-	public void setY(int y) {
-		this.y = y;
+	public void setworldPosY(int worldPosY) {
+		this.worldPosY = worldPosY;
 	}
 	public int getSpeed() {
 		return speed;
